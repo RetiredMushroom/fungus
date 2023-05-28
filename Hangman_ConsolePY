@@ -20,7 +20,7 @@ hint_use = 0
 for i in word:
     word_space.append('_')
 
-
+# check function: for checking the guess
 def check(guess):
     global user_m_number
     global correct_guesses
@@ -30,7 +30,7 @@ def check(guess):
     else:
         user_m_number += 1
 
-
+# mistake function: to print out the hangman
 def mistake(m_number):
     if m_number == 0:
         print(' ______')
@@ -84,7 +84,7 @@ def mistake(m_number):
         print('===')
         print("}You Lost{")
 
-
+# hinter function: to give a hint to the player
 def hinter():
     global hint
     global hint_use

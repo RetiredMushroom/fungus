@@ -1,0 +1,121 @@
+from random_words import RandomWords
+import random
+
+# word generation
+rw = RandomWords()
+raw_word = str(rw.random_words(min_letter_count=6))
+word = list(raw_word)
+word.remove('[')
+word.remove(']')
+word.remove("'")
+word.remove("'")
+
+word_space = []
+user_m_number = 0
+correct_guesses = []
+hint = ""
+hint_use = 0
+
+# creating the word space
+for i in word:
+    word_space.append('_')
+
+
+def check(guess):
+    global user_m_number
+    global correct_guesses
+    if guess in word:
+        word_space[word.index(guess)] = guess
+        correct_guesses.append(guess)
+    else:
+        user_m_number += 1
+
+
+def mistake(m_number):
+    if m_number == 0:
+        print(' ______')
+        print(' |    |')
+        print(' |     ')
+        print(' |     ')
+        print(' |     ')
+        print('===')
+
+    elif m_number == 1:
+        print(' ______')
+        print(' |    |')
+        print(' |    0')
+        print(' |     ')
+        print(' |     ')
+        print('===')
+    elif m_number == 2:
+        print(' ______')
+        print(' |    |')
+        print(' |    0')
+        print(' |    |')
+        print(' |     ')
+        print('===')
+    elif m_number == 3:
+        print(' ______')
+        print(' |    |')
+        print(' |    0')
+        print(' |   /|')
+        print(' |     ')
+        print('===')
+    elif m_number == 4:
+        print(' ______')
+        print(' |    |')
+        print(' |    0')
+        print(' |   /|\\')
+        print(' |     ')
+        print('===')
+    elif m_number == 5:
+        print(' ______')
+        print(' |    |')
+        print(' |    0')
+        print(' |   /|\\')
+        print(' |    /')
+        print('===')
+    elif m_number == 6:
+        print(' ______')
+        print(' |    |')
+        print(' |    0')
+        print(' |   /|\\')
+        print(' |    /\\')
+        print('===')
+        print("}You Lost{")
+
+
+def hinter():
+    global hint
+    global hint_use
+    hint_use += 1
+    hint_range = list(range(len(word)))
+    for gues in correct_guesses:
+        hint_range.remove(word.index(gues))
+    hint = word[random.choice(hint_range)]
+
+
+def run():
+    while user_m_number < 6 and word_space != word:
+        global hint_use
+        global hint
+        mistake(user_m_number)
+        print("Hints:", 4 - hint_use)
+        print("Mistakes:", user_m_number)
+        print(word_space)
+        user_guess = input("Guess: ").lower()
+        if user_guess == 'hint' and hint_use <4:
+            hinter()
+            check(hint)
+        elif user_guess == 'hint' and hint_use == 4:
+            print("No more hints left")
+        else:
+            check(user_guess)
+    if word_space == word:
+        print("}You Won{")
+    else:
+        mistake(user_m_number)
+    print("The word was:", raw_word)
+
+
+run()
